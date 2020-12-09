@@ -1,16 +1,18 @@
 package com.moyu;
 
+import android.graphics.Bitmap;
+
 public class MyContacts {
     private String name;
     private String phoneno;
-    private String note;
+    private String email;
+    private Bitmap photo;
 
     MyContacts() {
     }
-    MyContacts(String name_, String phoneno_, String note_) {
-        this.name = name_;
-        this.phoneno = phoneno_;
-        this.note = note_;
+
+    public Bitmap getPhoto() {
+        return photo;
     }
 
     public String getName() {
@@ -21,19 +23,23 @@ public class MyContacts {
         return phoneno;
     }
 
-    public String getNote() {
-        return note;
+    public String getEmail() {
+        return email;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPhoneno(String phoneno) {
         this.phoneno = phoneno;
+    }
+
+    public void setPhoto(Bitmap photo) {
+        this.photo = photo;
     }
 }
