@@ -1,10 +1,13 @@
 package com.moyu;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -16,10 +19,10 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-public class Adapter extends ArrayAdapter {
+public class ContactsAdapter extends ArrayAdapter {
     private final int ImageId;
 
-    public Adapter(Context context, int headImage, List<MyContacts> obj) {
+    public ContactsAdapter(Context context, int headImage, List<MyContacts> obj) {
         super(context, headImage, obj);
         ImageId = headImage;//这个是传入我们自己定义的界面
     }
@@ -40,6 +43,17 @@ public class Adapter extends ArrayAdapter {
         name.setText(myContacts.getName());
         phone.setText(myContacts.getPhoneno());
         email.setText(myContacts.getEmail());
+
+//        final ImageButton btn = (ImageButton)view.findViewById(R.id.dial);
+//        btn.setTag(position);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String phoneno = v.findViewById(R.id.phoneno).toString();
+//                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneno));
+//                startActivity(intent);
+//            }
+//        });
 
         return view;
     }

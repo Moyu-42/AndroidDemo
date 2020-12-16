@@ -2,6 +2,7 @@ package com.moyu;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 
 public class CreateContact extends Activity {
     private EditText et_name, et_phone, et_email;
+    private ImageButton et_photo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,15 @@ public class CreateContact extends Activity {
         String name = et_name.getText().toString().trim();
         String phone = et_phone.getText().toString().trim();
         String email = et_email.getText().toString().trim();
+
+        if ("".equals(phone)) {
+            AlertDialog.Builder ab = new AlertDialog.Builder(CreateContact.this);
+            ab.setTitle("输出错误！");
+            ab.setMessage("请输入联系人信息");
+            ab.setPositiveButton("确定", null);
+            ab.show();
+            return;
+        }
 
         Uri uri = Uri.parse("content://com.android.contacts/raw_contacts");
         ContentResolver resolver = view.getContext().getContentResolver();
@@ -85,6 +97,9 @@ public class CreateContact extends Activity {
         startActivity(intent);
     }
 
+    public void insert() {
+
+    }
     public void requestPower() {
 //判断是否已经赋予权限
         if (ContextCompat.checkSelfPermission(this,

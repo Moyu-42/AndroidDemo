@@ -1,6 +1,7 @@
 package com.moyu;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.ContentResolver;
@@ -16,21 +17,27 @@ import android.database.Cursor;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class Contacts extends Activity {
+public class Contacts extends Activity implements AdapterView.OnItemClickListener{
 
     ListView contactsView;
     ArrayAdapter<String> adapter;
     List<MyContacts> contactsList=new ArrayList<MyContacts>();
+    ArrayList<MyContacts> list = new ArrayList<MyContacts>();
+    Integer n_ = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contacts);
         contactsView=(ListView)findViewById(R.id.contacts_view);
-        Adapter adapter=new Adapter(this, R.layout.myitem, contactsList);
+        ContactsAdapter adapter=new ContactsAdapter(this, R.layout.contact_item, contactsList);
         contactsView.setAdapter(adapter);
+        contactsView.setOnItemClickListener(this);
         readContacts();
     }
     private void readContacts(){
@@ -63,10 +70,13 @@ public class Contacts extends Activity {
                         bean.setPhoneno(data1);
                     }
                 }
-                Bitmap photo = getContactPhoto(getApplicationContext(), contactId, R.drawable.ic_launcher);
+                Bitmap photo = getContactPhoto(getApplicationContext(), contactId, R.drawable.ic_launcher_round);
                 bean.setPhoto(photo);
-
+                if ((bean.getName() == null || "".equals(bean.getName())) && (bean.getPhoneno() == null || "".equals(bean.getPhoneno()))) {
+                    continue;
+                }
                 contactsList.add(bean);
+                list.add(bean);
             }
         }catch(Exception e)
         {
@@ -96,6 +106,14 @@ public class Contacts extends Activity {
             return BitmapFactory.decodeByteArray(data, 0, data.length);
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //通过view获取其内部的组件，进而进行操作
+        MyContacts now = list.get(position);
+        String phoneno = now.getPhoneno();
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneno));
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

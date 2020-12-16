@@ -21,12 +21,12 @@
             android:layout_height="136dp"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/iv_select"
+            <ImageView
+                android:id="@+id/et_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:src="@tools:sample/avatars" />
 
             <EditText
                 android:id="@+id/et_name"
